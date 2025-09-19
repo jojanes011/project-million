@@ -1,0 +1,31 @@
+:root {
+  --driver-bg-color: hsl(222.2 84% 4.9%);
+  --driver-popover-bg-color: hsl(222.2 84% 4.9%);
+  --driver-popover-arrow-color: hsl(222.2 84% 4.9%);
+  --driver-popover-title-color: hsl(210 40% 98%);
+  --driver-popover-description-color: hsl(210 40% 96.1%);
+  --driver-popover-progress-text-color: hsl(210 40% 96.1%);
+  --driver-button-bg-color: hsl(217.2 32.6% 17.5%);
+  --driver-button-hover-bg-color: hsl(217.2 32.6% 22.5%);
+  --driver-button-text-color: hsl(210 40% 98%);
+  --driver-button-disabled-bg-color: hsl(217.2 32.6% 12.5%);
+  --driver-button-disabled-text-color: hsl(210 40% 80%);
+}
+
+.driver-popover {
+  border-radius: 0.75rem;
+  border: 1px solid hsl(217.2 32.6% 17.5%);
+}
+
+.driver-popover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.driver-popover-close-btn {
+  color: hsl(210 40% 96.1%);
+}
+.driver-popover-close-btn:hover {
+  color: hsl(210 40% 98%);
+}

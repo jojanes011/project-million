@@ -1,0 +1,62 @@
+name: project-million
+region: nyc3 # Elige la región que prefieras, ej: nyc1, sfo3
+
+# Base de datos MongoDB
+databases:
+- name: million-db
+  engine: MONGODB
+  production: true
+  # DigitalOcean elegirá la versión, pero puedes especificarla si es necesario
+  # version: "6" 
+
+# Servicio de Backend (.NET API)
+services:
+- name: million-backend
+  # Construye desde el Dockerfile en el directorio million-backend
+  dockerfile_path: million-backend/Dockerfile
+  source_dir: million-backend
+  github:
+    # Reemplaza con tu repositorio de GitHub
+    repo: jojanes011/project-million
+    branch: main
+  
+  # Variables de entorno para el backend
+  envs:
+  - key: MongoDbSettings__ConnectionString
+    # Hace referencia a la cadena de conexión de la base de datos definida arriba
+    value: ${million-db.CONNECTION_STRING}
+  - key: MongoDbSettings__DatabaseName
+    value: "MillionDb" # El nombre de tu base de datos
+  - key: ASPNETCORE_URLS
+    # App Platform asigna el puerto dinámicamente, escucha en el puerto 8080
+    value: http://+:8080
+
+  # Puerto HTTP en el que escucha el servicio
+  http_port: 8080
+  
+  # Rutas de la API (ej: /api)
+  routes:
+  - path: /api
+
+# Servicio de Frontend (Next.js)
+- name: million-front
+  # Construye desde el Dockerfile en el directorio million-front
+  dockerfile_path: million-front/Dockerfile
+  source_dir: million-front
+  github:
+    # Reemplaza con tu repositorio de GitHub
+    repo: jojanes011/project-million
+    branch: main
+
+  # Variables de entorno para el frontend
+  envs:
+  - key: NEXT_PUBLIC_API_URL_BASE
+    # Apunta a la URL interna del servicio de backend
+    value: ${million-backend.INTERNAL_URL}
+  
+  # Puerto HTTP en el que escucha el servicio
+  http_port: 3000
+
+  # Ruta principal para el tráfico web
+  routes:
+  - path: /
